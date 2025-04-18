@@ -65,6 +65,7 @@ export class UserService {
 
   async update(id: number, updateUserDto: Prisma.UserUpdateInput) {
     const user = await this.prisma.user.update({
+      omit: { password: true },
       where: {
         id
       },
@@ -78,6 +79,7 @@ export class UserService {
 
   async remove(id: number) {
     return await this.prisma.user.delete({
+      omit: { password: true },
       where: {
         id
       }
