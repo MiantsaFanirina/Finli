@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Prisma } from 'generated/prisma';
 
@@ -33,10 +33,11 @@ export class UserController {
 
   
   @Post('validate')
-  async validateUser(@Body() authPayload: Prisma.UserCreateInput) {
+  async validateUser(@Body() authPayload: Prisma.UserCreateInput) {;
     return await this.userService.validateUser(
       authPayload.email,
       authPayload.password,
     );
   }
+
 }
