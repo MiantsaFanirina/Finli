@@ -1,6 +1,6 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useValidateUser } from "../../../../features/user/user.hook";
+import { useValidateUser } from "@/features/user/user.mutation";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({
@@ -16,10 +16,6 @@ const LoginPage = () => {
     };
 
     const { mutate, error, data, isPending } = useValidateUser();
-
-    if(data?.register) {
-        localStorage.setItem("token", data.register);
-    }
 
     const handleValidateUser = (e: FormEvent) => {
         e.preventDefault();
