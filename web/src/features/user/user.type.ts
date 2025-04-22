@@ -1,21 +1,26 @@
+// GLOBAL
+export interface ClientUserDto {
+    userId: number;
+    register: string;
+}
+
 // QUERIES & MUTATIONS
 export type UserLoginDto = {
     email: string;
     password: string;
 }
-interface ByCredentials {
+interface CredentialsErrorDto {
     email: boolean;
     password: boolean;
-    userId?: never;
-    register?: never;
 }
-interface ByIdAndRegister {
-    userId: number;
-    register: string;
-    email?: never;
-    password?: never;
+export type ValidateUserData = CredentialsErrorDto | ClientUserDto;
+
+export type CreateUserDto = {
+    username: string;
+    email: string;
+    password: string;
 }
-export type ValidateUserData = ByCredentials | ByIdAndRegister;
+
 
 
 // STORE

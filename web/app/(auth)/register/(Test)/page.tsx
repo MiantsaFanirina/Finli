@@ -1,7 +1,8 @@
 "use client";
 import { useState, ChangeEvent, FormEvent } from "react";
-import { usePasswordConfirmation } from "@/features/user/user.hook"
-import {useAlphanumericUnderscoreOnly} from "@/hooks/";
+import { usePasswordConfirmation } from "@/features/user/user.hook";
+import { useAlphanumericUnderscoreOnly } from "@/hooks/";
+import { useCreateUser } from "@/features/user/user.mutation";
 
 const RegisterPage = () => {
     const [formData, setFormData] = useState({
@@ -11,10 +12,12 @@ const RegisterPage = () => {
         confirmPassword: "",
     });
 
+    // Mutations
+    const { mutate, error, data, isPending } = useCreateUser();
+
     // Hooks
     const { error: confirmError, isConfirmed } = usePasswordConfirmation();
     const { error: usernameError, validate: validateUsername } = useAlphanumericUnderscoreOnly();
-
 
     // Event handling
     const handleLoginData = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,8 +36,7 @@ const RegisterPage = () => {
 
         if (!isUsernameValid || !isPasswordValid) return;
 
-        console.log("Form submitted successfully!", { username, email, password });
-        // Add real login logic here
+        mutate({ username, email, password });
     };
 
     return (
@@ -77,8 +79,20 @@ const RegisterPage = () => {
             />
             {confirmError && <p style={{ color: "red" }}>{confirmError}</p>}
 
+            {/* Display API error if any */}
+            {error && (
+                <p style={{ color: "red" }}>
+                    Something went wrong
+                </p>
+            )}
 
-            <button type="submit">Login</button>
+            {/* Loading State */}
+            <button type="submit" disabled={isPending}>
+                {isPending ? "Creating account..." : "Register"}
+            </button>
+
+            {/* Success Message */}
+            {data && <p style={{ color: "green" }}>User registered successfully!</p>}
         </form>
     );
 };
