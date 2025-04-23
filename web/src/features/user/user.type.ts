@@ -4,6 +4,14 @@ export interface ClientUserDto {
     register: string;
 }
 
+export interface UserType {
+    id: number;
+    createdAt: Date;
+    updatedAt: Date;
+    username: string;
+    email: string;
+}
+
 // QUERIES & MUTATIONS
 export type UserLoginDto = {
     email: string;
@@ -19,6 +27,17 @@ export type CreateUserDto = {
     username: string;
     email: string;
     password: string;
+}
+
+export type UserUpdateInput = {
+    username?:  string;
+    email?: string;
+    password?: string;
+}
+
+export type UserUpdateDto = {
+    id: number;
+    formData: UserUpdateInput;
 }
 
 
